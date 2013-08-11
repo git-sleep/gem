@@ -1,0 +1,6 @@
+#!/usr/bin/ruby
+
+require File.expand_path('../../lib/git-sleep', __FILE__)
+require 'optparse'
+
+puts "go to bed!"
