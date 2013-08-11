@@ -27,12 +27,18 @@ when 1
         File.open(sample_file_name, "w") do |f|
           f.write hook_code
         end
-        File.rename sample_file_name, non_sample_file_name
+        successful_rename = File.rename sample_file_name, non_sample_file_name
+        if successful_rename.zero?
+          puts "Successfully installed hook. Enjoy your new sense of balance."
+        else
+          puts "Sorry, the hook failed to install..." # will this ever happen?
+        end
       elsif File.exists? non_sample_file_name
         puts "You already have a pre-commit hook and we don't want to overwrite it..."
-      else
         # they have neither file, which is weird, that means they deleted it
         # I guess we should probably create it in that case
+      else
+        puts "Wait... did you delete your pre-commit hook example..? why?"
       end
     else
       puts "This is not a git repo!"
@@ -41,12 +47,9 @@ when 1
     puts "Visit #{GitSleep::OUR_SITE} to get the necessary information"
     puts "what is your xid?"
     print "> "
-    xid = $stdin.gets.chomp
-    puts "what is your token?"
-    print "> "
     token = $stdin.gets.chomp
-    netrc.new_item_prefix = "\n# jawbone xid and sleepytime token\n"
-    netrc["sleepytime.com"] = xid, token
+    netrc.new_item_prefix = "\n# jawbone xid\n"
+    netrc["sleepytime.com"] = xid, "no password"
     netrc.save
   when :"-v"
     puts "Git Sleep v#{GitSleep::VERSION}"

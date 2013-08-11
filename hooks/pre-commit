@@ -6,14 +6,14 @@ require 'git-sleep'
 require 'httparty'
 
 netrc = Netrc.read(GitSleep::NETRC_PATH)
-xid, token = netrc["sleepytime.com"]
+xid = netrc["sleepytime.com"].first
 
-raise "Need to `git sleep authorize`" if token.nil?
+raise "Need to `git sleep authorize`" if xid.nil?
 
 response = HTTParty.get(
   "http://localhost:3000/api/need_sleep",
   :body => {
-    :token => token
+    :xid => xid
   }
 )
 
