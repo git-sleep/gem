@@ -6,7 +6,7 @@ require 'git-sleep'
 require 'httparty'
 
 netrc = Netrc.read(GitSleep::NETRC_PATH)
-xid = netrc["sleepytime.com"].first
+xid = netrc["gitsleep.com"].first
 
 raise "Need to `git sleep authorize`" if xid.nil?
 
