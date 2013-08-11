@@ -15,6 +15,10 @@ SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit.sample"
 NON_SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit"
 
 def install_hook
+
+  path_to_hook = File.expand_path("../../hooks/pre-commit", __FILE__)
+  hook_code = File.read(path_to_hook)
+
   File.open(SAMPLE_FILE_NAME, "w") do |f|
     f.write hook_code
   end
@@ -37,8 +41,6 @@ when 1
     
     if Dir.entries(CURRENT_PATH).include?(".git")
       puts "This is a git repo, so I'll now install the hook"
-      path_to_hook = File.expand_path("../../hooks/pre-commit", __FILE__)
-      hook_code = File.read(path_to_hook)
       
       if File.exists? SAMPLE_FILE_NAME
         install_hook()

@@ -2,7 +2,7 @@ require 'rubygems'
 require 'httparty'
 
 module GitSleep
-  VERSION      = "0.0.11"
+  VERSION      = "0.0.12"
   LAST_UPDATED = "2013-08-11"
   NETRC_PATH   = File.expand_path('~/.netrc')
   OUR_SITE     = "http://sleepytime.com"
