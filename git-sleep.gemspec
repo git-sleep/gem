@@ -20,4 +20,5 @@ Gem::Specification.new do |git_sleep|
   git_sleep.license       = "MIT"
   git_sleep.required_ruby_version = '>= 1.8.7'
   git_sleep.add_runtime_dependency 'httparty'
+  git_sleep.add_runtime_dependency 'netrc'
 end
