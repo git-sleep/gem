@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+hour = Time.now.localtime.hour
+
+if hour < 12 || hour > 21
+  puts "It's #{Time.now.strftime("%I:%M:%S %p")}, that's way too late to commit!!"
+  puts "Go to sleep #{ENV["USER"]}!!"
+  puts "if you're sure you want to commit right now, run: git commit --no-verify"
+  exit(1)
+end

@@ -1,6 +1,37 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
+require 'rubygems'
+require 'netrc'
+require 'httparty'
 require File.expand_path('../../lib/git-sleep', __FILE__)
-require 'optparse'
 
-puts "go to bed!"
+n = Netrc.read(GitSleep::NETRC_PATH)
+
+
+if ARGV.length == 1
+  case ARGV.first.downcase.to_sym
+  when :init
+    puts "here we will have to install the hook in this repo"
+    puts "which means checking if we're even in a repo"
+    current_path = File.expand_path(".")
+    if Dir.entries(current_path).include?(".git")
+      puts "This is a git repo"
+    else
+      puts "This is not a git repo"
+    end
+  when :authorize
+    puts "Visit #{GitSleep::OUR_SITE} to get the necessary information"
+
+    puts "what is your xid?"
+    print "> "
+    xid = $stdin.gets.chomp
+    puts "what is your token?"
+    print "> "
+    token = $stdin.gets.chomp
+
+    n.new_item_prefix = "\n# jawbone xid and sleepytime token\n"
+    n["sleepytime.com"] = xid, token
+    n.save
+
+  end
+end
