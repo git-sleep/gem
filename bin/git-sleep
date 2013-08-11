@@ -14,7 +14,7 @@ CURRENT_PATH = File.expand_path(".")
 SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit.sample"
 NON_SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit"
 
-def install_hook(SAMPLE_FILE_NAME, NON_SAMPLE_FILE_NAME)
+def install_hook
   File.open(SAMPLE_FILE_NAME, "w") do |f|
     f.write hook_code
   end
