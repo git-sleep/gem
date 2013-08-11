@@ -4,7 +4,7 @@ require 'rubygems'
 require 'netrc'
 require File.expand_path('../../lib/git-sleep', __FILE__)
 
-n = Netrc.read(GitSleep::NETRC_PATH)
+netrc = Netrc.read(GitSleep::NETRC_PATH)
 
 help_text = "Available commands:
     git sleep authorize
@@ -30,9 +30,9 @@ when 1
     puts "what is your token?"
     print "> "
     token = $stdin.gets.chomp
-    n.new_item_prefix = "\n# jawbone xid and sleepytime token\n"
-    n["sleepytime.com"] = xid, token
-    n.save
+    netrc.new_item_prefix = "\n# jawbone xid and sleepytime token\n"
+    netrc["sleepytime.com"] = xid, token
+    netrc.save
   else # unrecognized command
     puts help_text
   end
