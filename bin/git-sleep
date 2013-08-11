@@ -47,7 +47,7 @@ when 1
       elsif File.exists? NON_SAMPLE_FILE_NAME
         puts "You already have a pre-commit hook and we don't want to overwrite it..."
         print "Is it okay? [y/n] "
-        ok = gets.chomp
+        ok = $stdin.gets.chomp
         case ok
         when "y"
           install_hook()
