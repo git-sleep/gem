@@ -19,13 +19,13 @@ response = HTTParty.get(
 
 if response.response.code.to_i == 200
   data = response.parsed_response
-  unless data["can_commit"]
+  if data["can_commit"]
+    puts "Great job #{ENV['USER']}! You slept #{data['sleep24']} hours in the last 24 hours"
+  else
     puts "You have only slept #{data["sleep24"]} hours in the last 24 hours!!"
     puts "You'll have to git some sleep #{ENV["USER"]} before you can commit again"
     puts "(if you're sure you want to commit right now, run: git commit --no-verify)"
     exit(1)
-  else
-    puts "Great job #{ENV['USER']}! You slept #{data['sleep24']} hours in the last 24 hours"
   end
 else
   # could not communicate with our server

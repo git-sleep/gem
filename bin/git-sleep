@@ -19,6 +19,21 @@ when 1
     current_path = File.expand_path(".")
     if Dir.entries(current_path).include?(".git")
       puts "This is a git repo, so I'll now install the hook"
+      path_to_hook = File.expand_path("../../hooks/pre-commit", __FILE__)
+      hook_code = File.read(path_to_hook)
+      sample_file_name = "#{current_path}/.git/hooks/pre-commit.sample"
+      non_sample_file_name = "#{current_path}/.git/hooks/pre-commit"
+      if File.exists? sample_file_name
+        File.open(sample_file_name, "w") do |f|
+          f.write hook_code
+        end
+        File.rename sample_file_name, non_sample_file_name
+      elsif File.exists? non_sample_file_name
+        puts "You already have a pre-commit hook and we don't want to overwrite it..."
+      else
+        # they have neither file, which is weird, that means they deleted it
+        # I guess we should probably create it in that case
+      end
     else
       puts "This is not a git repo!"
     end

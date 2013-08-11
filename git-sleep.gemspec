@@ -11,6 +11,7 @@ Gem::Specification.new do |git_sleep|
   git_sleep.files         = Dir[
                             './*.{md,gemspec}',
                             './.gitignore',
+                            './hooks/*',
                             './bin/*',
                             './lib/*'
                           ]
