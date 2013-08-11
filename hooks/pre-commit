@@ -1,10 +1,31 @@
 #!/usr/bin/env ruby
 
-hour = Time.now.localtime.hour
+require 'rubygems'
+require 'netrc'
+require 'git-sleep'
+require 'httparty'
 
-if hour < 12 || hour > 21
-  puts "It's #{Time.now.strftime("%I:%M:%S %p")}, that's way too late to commit!!"
-  puts "Go to sleep #{ENV["USER"]}!!"
-  puts "if you're sure you want to commit right now, run: git commit --no-verify"
-  exit(1)
+netrc = Netrc.read(GitSleep::NETRC_PATH)
+xid, token = netrc["sleepytime.com"]
+
+raise "Need to `git sleep authorize`" if token.nil?
+
+response = HTTParty.get(
+  "http://localhost:3000/api/need_sleep",
+  :body => {
+    :token => token
+  }
+)
+
+if response.response.code == "200"
+  data = response.parsed_response
+  unless data["can_commit"]
+    puts "You have only slept #{data["sleep24"]} hours in the last 24 hours!!"
+    puts "Git some sleep #{ENV["USER"]}"
+    puts "if you're sure you want to commit right now, run: git commit --no-verify"
+    exit(1)
+  end
+else
+  # could not communicate with our server
+  # uh oh!
 end
