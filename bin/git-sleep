@@ -10,35 +10,50 @@ help_text = "Available commands:
     git sleep authorize
     git sleep init"
 
+CURRENT_PATH = File.expand_path(".")
+SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit.sample"
+NON_SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit"
+
+def install_hook(SAMPLE_FILE_NAME, NON_SAMPLE_FILE_NAME)
+  File.open(SAMPLE_FILE_NAME, "w") do |f|
+    f.write hook_code
+  end
+  successful_rename = File.rename SAMPLE_FILE_NAME, NON_SAMPLE_FILE_NAME
+  if successful_rename.zero?
+    puts "Successfully installed hook. Enjoy your new sense of balance."
+  else
+    puts "Sorry, the hook failed to install..." # will this ever happen?
+  end
+
+end
+
+
 case ARGV.length
 when 0
   puts help_text
 when 1
   case ARGV.first.downcase.to_sym
   when :init
-    current_path = File.expand_path(".")
-    if Dir.entries(current_path).include?(".git")
+    
+    if Dir.entries(CURRENT_PATH).include?(".git")
       puts "This is a git repo, so I'll now install the hook"
       path_to_hook = File.expand_path("../../hooks/pre-commit", __FILE__)
       hook_code = File.read(path_to_hook)
-      sample_file_name = "#{current_path}/.git/hooks/pre-commit.sample"
-      non_sample_file_name = "#{current_path}/.git/hooks/pre-commit"
-      if File.exists? sample_file_name
-        File.open(sample_file_name, "w") do |f|
-          f.write hook_code
-        end
-        successful_rename = File.rename sample_file_name, non_sample_file_name
-        if successful_rename.zero?
-          puts "Successfully installed hook. Enjoy your new sense of balance."
-        else
-          puts "Sorry, the hook failed to install..." # will this ever happen?
-        end
-      elsif File.exists? non_sample_file_name
+      
+      if File.exists? SAMPLE_FILE_NAME
+        install_hook()
+      elsif File.exists? NON_SAMPLE_FILE_NAME
         puts "You already have a pre-commit hook and we don't want to overwrite it..."
-        # they have neither file, which is weird, that means they deleted it
-        # I guess we should probably create it in that case
+        print "Is it okay? [y/n] "
+        ok = gets.chomp
+        case ok
+        when "y"
+          install_hook()
+        end
       else
-        puts "Wait... did you delete your pre-commit hook example..? why?"
+        # the file just doesn't exist
+        # this probably won't work because it won't be executable...?
+        install_hook()
       end
     else
       puts "This is not a git repo!"
