@@ -28,7 +28,7 @@ if response.response.code.to_i == 200
     exit(1)
   end
 elsif response.response.code.to_i == 401
-  puts "Must first authorize at sleepytime.com"
+  puts "Must first authorize at #{GitSleep::OUR_SITE}"
   puts "Then run `git sleep authorize`"
 else
   # could not communicate with our server
