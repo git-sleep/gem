@@ -48,6 +48,8 @@ when 1
     netrc.new_item_prefix = "\n# jawbone xid and sleepytime token\n"
     netrc["sleepytime.com"] = xid, token
     netrc.save
+  when :"-v"
+    puts "Git Sleep v#{GitSleep::VERSION}"
   else # unrecognized command
     puts help_text
   end
