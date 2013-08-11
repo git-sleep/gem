@@ -27,6 +27,9 @@ if response.response.code.to_i == 200
     puts "(if you're sure you want to commit right now, run: git commit --no-verify)"
     exit(1)
   end
+elsif response.response.code.to_i == 401
+  puts "Must first authorize at sleepytime.com"
+  puts "Then run `git sleep authorize`"
 else
   # could not communicate with our server
   # uh oh!
