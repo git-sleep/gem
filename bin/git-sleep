@@ -47,7 +47,7 @@ when 1
     puts "Visit #{GitSleep::OUR_SITE} to get the necessary information"
     puts "what is your xid?"
     print "> "
-    token = $stdin.gets.chomp
+    xid = $stdin.gets.chomp
     netrc.new_item_prefix = "\n# jawbone xid\n"
     netrc["sleepytime.com"] = xid, "no password"
     netrc.save
