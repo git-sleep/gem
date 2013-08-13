@@ -11,7 +11,7 @@ xid = netrc["gitsleep.com"].first
 raise "Need to `git sleep authorize`" if xid.nil?
 
 response = HTTParty.get(
-  "http://localhost:3000/api/need_sleep",
+  "http://www.gitsleep.com/api/need_sleep",
   :body => {
     :xid => xid
   }
