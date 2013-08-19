@@ -7,7 +7,7 @@ Gem::Specification.new do |git_sleep|
   git_sleep.summary       = "Uses Jawbone to figure out if you are awake enough to code based on your sleep data"
   git_sleep.description   = "Uses Jawbone to figure out if you are awake enough to code"
   git_sleep.authors       = ["Max Jacobson", "Ruthie Nachmany", "Sarah Duve"]
-  git_sleep.email         = ["maxwell.jacobson@gmail.com"]
+  git_sleep.email         = ["maxwell.jacobson@gmail.com", "ruthie.nachmany@flatironschool.com", "saduve@gmail.com"]
   git_sleep.files         = Dir[
                             './*.{md,gemspec}',
                             './.gitignore',
@@ -17,7 +17,7 @@ Gem::Specification.new do |git_sleep|
                           ]
   git_sleep.require_paths = ["lib"]
   git_sleep.executables   = ["git-sleep"]
-  git_sleep.homepage      = "http://rubygems.org/gems/git-sleep"
+  git_sleep.homepage      = GitSleep::OUR_SITE
   git_sleep.license       = "MIT"
   git_sleep.required_ruby_version = '>= 1.8.7'
   git_sleep.add_runtime_dependency 'httparty'
