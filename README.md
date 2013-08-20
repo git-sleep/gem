@@ -7,7 +7,7 @@
 
 `gem install git-sleep`
 
-to be used in conjunction with [website goes here](#)
+to be used in conjunction with [gitsleep.com](http://www.gitsleep.com)
 
 ## usage:
 

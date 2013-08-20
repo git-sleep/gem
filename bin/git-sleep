@@ -63,7 +63,7 @@ when 1
     print "> "
     xid = $stdin.gets.chomp
     netrc.new_item_prefix = "\n# jawbone xid\n"
-    netrc["gitsleep.com"] = xid, "no password"
+    netrc["gitsleep.com"] = xid, "no_password"
     netrc.save
   when :"-v"
     puts "Git Sleep v#{GitSleep::VERSION}"

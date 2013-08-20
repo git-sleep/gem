@@ -10,6 +10,7 @@ xid = netrc["gitsleep.com"].first
 
 raise "Need to `git sleep authorize`" if xid.nil?
 
+
 begin
   response = HTTParty.get(
     "http://www.gitsleep.com/api/need_sleep",
@@ -22,18 +23,15 @@ rescue Exception => e
   exit 0
 end
 
-
-
 if response.response.code.to_i == 200
   data = response.parsed_response
-  if data["can_commit"]
-    puts "Great job #{ENV['USER']}! You slept #{data['sleep24']} hours in the last 24 hours"
-  else
-    puts "You have only slept #{data["sleep24"]} hours in the last 24 hours!!"
-    puts "You'll have to git some sleep #{ENV["USER"]} before you can commit again"
-    puts "(if you're sure you want to commit right now, run: git commit --no-verify)"
-    exit(1)
+
+  `git notes --ref=gitsleep add -m "On #{data['sleep24']} hours sleep"`
+  remotes = `git remote`.split("\n")
+  remotes.each do |remote|
+    `git push #{remote} refs/notes/* 2> /dev/null`
   end
+
 elsif response.response.code.to_i == 401
   puts "Must first authorize at #{GitSleep::OUR_SITE}"
   puts "Then run `git sleep authorize`"
@@ -41,3 +39,4 @@ else
   # could not communicate with our server
   # uh oh!
 end
+
