@@ -11,24 +11,22 @@ help_text = "Available commands:
     git sleep init"
 
 CURRENT_PATH = File.expand_path(".")
-SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit.sample"
-NON_SAMPLE_FILE_NAME = "#{CURRENT_PATH}/.git/hooks/pre-commit"
+PATH_TO_THIS_REPOS_HOOKS = "#{CURRENT_PATH}/.git/hooks"
 
-def install_hook
-
-  path_to_hook = File.expand_path("../../hooks/pre-commit", __FILE__)
-  hook_code = File.read(path_to_hook)
-
-  File.open(SAMPLE_FILE_NAME, "w") do |f|
+def install_hook(event)
+  hook_code = File.read(File.expand_path("../../hooks/#{event}", __FILE__))
+  path_to_new_hook = File.expand_path("#{PATH_TO_THIS_REPOS_HOOKS}/#{event}")
+  if File.exists? path_to_new_hook
+    puts "You already have a #{event} hook and we don't want to overwrite it..."
+    print "Is it okay? [y/n] "
+    ok = $stdin.gets.chomp
+    return unless ok == "y"
+  end
+  File.open(path_to_new_hook, "w") do |f|
     f.write hook_code
   end
-  successful_rename = File.rename SAMPLE_FILE_NAME, NON_SAMPLE_FILE_NAME
-  if successful_rename.zero?
-    puts "Successfully installed hook. Enjoy your new sense of balance."
-  else
-    puts "Sorry, the hook failed to install..." # will this ever happen?
-  end
-
+  `chmod a+x #{path_to_new_hook}`
+  puts "Hook installed and made executable"
 end
 
 
@@ -38,25 +36,28 @@ when 0
 when 1
   case ARGV.first.downcase.to_sym
   when :init
-    
-    if Dir.entries(CURRENT_PATH).include?(".git")
-      puts "This is a git repo, so I'll now install the hook"
-      
-      if File.exists? SAMPLE_FILE_NAME
-        install_hook()
-      elsif File.exists? NON_SAMPLE_FILE_NAME
-        puts "You already have a pre-commit hook and we don't want to overwrite it..."
-        print "Is it okay? [y/n] "
-        ok = $stdin.gets.chomp
-        install_hook() if ok == "y"
+
+    if !Dir.entries(CURRENT_PATH).include? ".git"
+      puts "This is not a git repo. Would you like to initialize one?"
+      print "[y/n] "
+      ok = $stdin.gets.chomp
+      if ok == "y"
+        `git init`
       else
-        # the file just doesn't exist
-        # this probably won't work because it won't be executable...?
-        install_hook()
+        exit 0
       end
-    else
-      puts "This is not a git repo!"
     end
+
+    puts "Install the pre-commit hook that prevents commits when you haven't sleep enough?"
+    print "Is it okay? [y/n] "
+    ok = $stdin.gets.chomp
+    install_hook("pre-commit") if ok == "y"
+
+    puts "Install the post-commit hook that adds git notes about your sleep data?"
+    print "Is it okay? [y/n] "
+    ok = $stdin.gets.chomp
+    install_hook("post-commit") if ok =="y"
+
   when :authorize
     puts "Visit #{GitSleep::OUR_SITE} to get the necessary information"
     puts "what is your xid?"
