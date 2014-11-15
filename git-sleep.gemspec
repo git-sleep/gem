@@ -7,7 +7,7 @@ Gem::Specification.new do |git_sleep|
   git_sleep.summary       = "Uses Jawbone to figure out if you are awake enough to code based on your sleep data"
   git_sleep.description   = "Uses Jawbone to figure out if you are awake enough to code"
   git_sleep.authors       = ["Max Jacobson", "Ruthie Nachmany", "Sarah Duve"]
-  git_sleep.email         = ["maxwell.jacobson@gmail.com", "ruthie.nachmany@flatironschool.com", "saduve@gmail.com"]
+  git_sleep.email         = ["max@hardscrabble.net", "ruthie.nachmany@flatironschool.com", "saduve@gmail.com"]
   git_sleep.files         = Dir[
                             './*.{md,gemspec}',
                             './.gitignore',
