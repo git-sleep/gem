@@ -6,19 +6,18 @@ require 'git-sleep'
 require 'httparty'
 
 netrc = Netrc.read(GitSleep::NETRC_PATH)
-xid = netrc["gitsleep.com"].first
+xid = netrc['gitsleep.com'].first
 
-raise "Need to `git sleep authorize`" if xid.nil?
-
+raise 'Need to `git sleep authorize`' if xid.nil?
 
 begin
   response = HTTParty.get(
-    "http://www.gitsleep.com/api/need_sleep",
-    :body => {
-      :xid => xid
+    'http://www.gitsleep.com/api/need_sleep',
+    body: {
+      xid: xid
     }
   )
-rescue Exception => e
+rescue StandardError => _
   puts "Can't connect to gitsleep.com"
   exit 0
 end
@@ -34,7 +33,7 @@ if response.response.code.to_i == 200
 
 elsif response.response.code.to_i == 401
   puts "Must first authorize at #{GitSleep::OUR_SITE}"
-  puts "Then run `git sleep authorize`"
+  puts 'Then run `git sleep authorize`'
 else
   # could not communicate with our server
   # uh oh!

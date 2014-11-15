@@ -10,25 +10,24 @@ help_text = "Available commands:
     git sleep authorize
     git sleep init"
 
-CURRENT_PATH = File.expand_path(".")
+CURRENT_PATH = File.expand_path('.')
 PATH_TO_THIS_REPOS_HOOKS = "#{CURRENT_PATH}/.git/hooks"
 
 def install_hook(event)
   hook_code = File.read(File.expand_path("../../hooks/#{event}", __FILE__))
   path_to_new_hook = File.expand_path("#{PATH_TO_THIS_REPOS_HOOKS}/#{event}")
-  if File.exists? path_to_new_hook
+  if File.exist?(path_to_new_hook)
     puts "You already have a #{event} hook and we don't want to overwrite it..."
-    print "Is it okay? [y/n] "
+    print 'Is it okay? [y/n] '
     ok = $stdin.gets.chomp
-    return unless ok == "y"
+    return unless ok == 'y'
   end
-  File.open(path_to_new_hook, "w") do |f|
+  File.open(path_to_new_hook, 'w') do |f|
     f.write hook_code
   end
   `chmod a+x #{path_to_new_hook}`
-  puts "Hook installed and made executable"
+  puts 'Hook installed and made executable'
 end
-
 
 case ARGV.length
 when 0
@@ -37,36 +36,38 @@ when 1
   case ARGV.first.downcase.to_sym
   when :init
 
-    if !Dir.entries(CURRENT_PATH).include? ".git"
-      puts "This is not a git repo. Would you like to initialize one?"
-      print "[y/n] "
+    unless Dir.entries(CURRENT_PATH).include?('.git')
+      puts 'This is not a git repo. Would you like to initialize one?'
+      print '[y/n] '
       ok = $stdin.gets.chomp
-      if ok == "y"
+      if ok == 'y'
         `git init`
       else
         exit 0
       end
     end
 
-    puts "Install the pre-commit hook that prevents commits when you haven't sleep enough?"
-    print "Is it okay? [y/n] "
+    puts 'Install the pre-commit hook that prevents ' \
+      "commits when you haven't sleep enough?"
+    print 'Is it okay? [y/n] '
     ok = $stdin.gets.chomp
-    install_hook("pre-commit") if ok == "y"
+    install_hook('pre-commit') if ok == 'y'
 
-    puts "Install the post-commit hook that adds git notes about your sleep data?"
-    print "Is it okay? [y/n] "
+    puts 'Install the post-commit hook that adds ' \
+      'git notes about your sleep data?'
+    print 'Is it okay? [y/n] '
     ok = $stdin.gets.chomp
-    install_hook("post-commit") if ok =="y"
+    install_hook('post-commit') if ok == 'y'
 
   when :authorize
     puts "Visit #{GitSleep::OUR_SITE} to get the necessary information"
-    puts "what is your xid?"
-    print "> "
+    puts 'what is your xid?'
+    print '> '
     xid = $stdin.gets.chomp
     netrc.new_item_prefix = "\n# jawbone xid\n"
-    netrc["gitsleep.com"] = xid, "no_password"
+    netrc['gitsleep.com'] = xid, 'no_password'
     netrc.save
-  when :"-v"
+  when :'-v'
     puts "Git Sleep v#{GitSleep::VERSION}"
   else # unrecognized command
     puts help_text
@@ -74,3 +75,4 @@ when 1
 else # other amounts of arguments
   puts help_text
 end
+
