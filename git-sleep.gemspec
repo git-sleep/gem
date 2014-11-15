@@ -3,7 +3,6 @@ require File.expand_path('../lib/git_sleep', __FILE__)
 Gem::Specification.new do |git_sleep|
   git_sleep.name = 'git-sleep'
   git_sleep.version = GitSleep::VERSION
-  git_sleep.date = GitSleep::LAST_UPDATED
   git_sleep.summary = 'Uses Jawbone to figure out if you are awake enough' \
     'to code based on your sleep data'
   git_sleep.description   = 'Uses Jawbone to figure out if you are awake ' \
