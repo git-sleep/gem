@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'netrc'
-require File.expand_path('../../lib/git_sleep', __FILE__)
+require File.expand_path('../../lib/git-sleep', __FILE__)
 
 netrc = Netrc.read(GitSleep::NETRC_PATH)
 

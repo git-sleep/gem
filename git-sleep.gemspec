@@ -1,4 +1,4 @@
-require File.expand_path('../lib/git_sleep', __FILE__)
+require File.expand_path('../lib/git-sleep', __FILE__)
 
 Gem::Specification.new do |git_sleep|
   git_sleep.name = 'git-sleep'
