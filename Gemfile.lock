@@ -1,0 +1,22 @@
+PATH
+  remote: .
+  specs:
+    git-sleep (0.1.1)
+      httparty
+      netrc
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    json (1.8.1)
+    multi_xml (0.5.5)
+    netrc (0.8.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  git-sleep!
