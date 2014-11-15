@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'netrc'
 require File.expand_path('../../lib/git-sleep', __FILE__)
 
-netrc = Netrc.read(GitSleep::NETRC_PATH)
+auth = GitSleep::Authorizer.instance
 
 help_text = "Available commands:
     git sleep authorize
@@ -64,9 +63,7 @@ when 1
     puts 'what is your xid?'
     print '> '
     xid = $stdin.gets.chomp
-    netrc.new_item_prefix = "\n# jawbone xid\n"
-    netrc['gitsleep.com'] = xid, 'no_password'
-    netrc.save
+    auth.xid = xid
   when :'-v'
     puts "Git Sleep v#{GitSleep::VERSION}"
   else # unrecognized command

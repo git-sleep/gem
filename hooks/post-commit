@@ -1,20 +1,16 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'netrc'
 require 'git-sleep'
 require 'httparty'
 
-netrc = Netrc.read(GitSleep::NETRC_PATH)
-xid = netrc['gitsleep.com'].first
-
-raise 'Need to `git sleep authorize`' if xid.nil?
+auth = GitSleep::Authorizer.instance
 
 begin
   response = HTTParty.get(
     'http://www.gitsleep.com/api/need_sleep',
     body: {
-      xid: xid
+      xid: auth.xid
     }
   )
 rescue StandardError => _
