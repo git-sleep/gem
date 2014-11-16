@@ -1,40 +1,27 @@
 #!/usr/bin/env ruby
 
 require 'git-sleep'
-require 'httparty'
 
-auth = GitSleep::Authorizer.instance
+comm = GitSleep::Communicator.instance
 
-begin
-  response = HTTParty.get(
-    'http://www.gitsleep.com/api/need_sleep',
-    body: {
-      xid: auth.xid
-    }
-  )
-rescue StandardError => _
+unless comm.can_connect?
   puts "Can't connect to gitsleep.com"
   exit 0
 end
 
-if response.response.code.to_i == 200
+if comm.happy_response?
   data = response.parsed_response
-  if data['can_commit']
-    puts "Great job #{ENV['USER']}! " \
-      "You slept #{data['sleep24']} hours in the last 24 hours"
+  if data.can_connect?
+    puts "Great job #{comm.username}! " \
+      "You slept #{comm.hours_of_sleep} hours in the last 24 hours"
   else
-    puts "You have only slept #{data['sleep24']} hours in the last 24 hours!!"
-    puts "You'll have to git some sleep #{ENV['USER']} " \
-      'before you can commit again'
-    puts "(if you're sure you want to commit right now, " \
+    puts "You have only slept #{comm.hours_of_sleep} hours in the " \
+      "last 24 hours!!\nYou'll have to git some sleep #{ENV['USER']} before" \
+      "you can commit again\n(if you're sure you want to commit right now, " \
       'run: git commit --no-verify)'
     exit(1)
   end
-elsif response.response.code.to_i == 401
-  puts "Must first authorize at #{GitSleep::OUR_SITE}"
-  puts 'Then run `git sleep authorize`'
-else
-  # could not communicate with our server
-  # uh oh!
+elsif comm.not_signed_up_response?
+  puts comm.not_signed_up_message
 end
 

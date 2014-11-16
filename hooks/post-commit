@@ -1,36 +1,21 @@
 #!/usr/bin/env ruby
 
 require 'git-sleep'
-require 'httparty'
 
-auth = GitSleep::Authorizer.instance
+comm = GitSleep::Communicator.instance
 
-begin
-  response = HTTParty.get(
-    'http://www.gitsleep.com/api/need_sleep',
-    body: {
-      xid: auth.xid
-    }
-  )
-rescue StandardError => _
+unless comm.can_connect?
   puts "Can't connect to gitsleep.com"
   exit 0
 end
 
-if response.response.code.to_i == 200
-  data = response.parsed_response
-
-  `git notes --ref=gitsleep add -m "On #{data['sleep24']} hours sleep"`
+if comm.happy_response?
+  `git notes --ref=gitsleep add -m "On #{comm.hours_of_sleep} hours sleep"`
   remotes = `git remote`.split("\n")
   remotes.each do |remote|
     `git push #{remote} refs/notes/* 2> /dev/null`
   end
-
-elsif response.response.code.to_i == 401
-  puts "Must first authorize at #{GitSleep::OUR_SITE}"
-  puts 'Then run `git sleep authorize`'
-else
-  # could not communicate with our server
-  # uh oh!
+elsif comm.not_signed_up_response?
+  puts comm.not_signed_up_message
 end
 
