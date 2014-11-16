@@ -1,3 +1,6 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require 'pry'
 require_relative './../lib/git-sleep'
 require_relative './support/netrc_helpers'

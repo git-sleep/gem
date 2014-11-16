@@ -33,5 +33,6 @@ Gem::Specification.new do |git_sleep|
   git_sleep.add_development_dependency 'rubocop', '~> 0.27'
   git_sleep.add_development_dependency 'rspec', '~> 3.1'
   git_sleep.add_development_dependency 'pry', '~> 0.10'
+  git_sleep.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
 end
 
