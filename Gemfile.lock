@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     git-sleep (0.1.1)
-      httparty
-      netrc
+      httparty (~> 0.13)
+      netrc (~> 0.8)
 
 GEM
   remote: https://rubygems.org/
@@ -57,4 +57,4 @@ DEPENDENCIES
   git-sleep!
   pry (~> 0.10)
   rspec (~> 3.1)
-  rubocop (~> 0.27.1)
+  rubocop (~> 0.27)
