@@ -1,6 +1,5 @@
 ### TODOS
 
-* use their name they gave jawbone, not their env[username]
 * maybe use their ssh public key to identify them, not their jawbone xid? at any rate needs some layer of security. that could be it. actually, wait, that doesn't make sense.
 
 # git sleep
