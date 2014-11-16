@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    git-sleep (0.2.0)
+    git-sleep (0.2.1)
       httparty (~> 0.13)
       netrc (~> 0.8)
 
