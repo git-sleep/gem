@@ -1,7 +1,7 @@
 # report test coverage when on CI
 # that env variable is set there
 if ENV['BLINK_182_DRUMMER'] == 'TRAVIS'
-  require "codeclimate-test-reporter"
+  require 'codeclimate-test-reporter'
   CodeClimate::TestReporter.start
 end
 
