@@ -1,5 +1,8 @@
 # git sleep
 
+[![Build
+Status](https://travis-ci.org/maxjacobson/git-sleep-gem.svg?branch=add-travis)](https://travis-ci.org/maxjacobson/git-sleep-gem)
+
 `gem install git-sleep`
 
 to be used in conjunction with [gitsleep.com](http://www.gitsleep.com)
