@@ -1,3 +1,3 @@
 .DS_STORE
 *.gem
-/spec/spec_helper/support/.netrc
+/spec/support/.netrc
