@@ -22,7 +22,7 @@ module GitSleep
     def ok_to_overwrite?
       puts already_exists_warning_text
       print 'Is it okay? [y/n] '
-      stdin.gets.chomp == 'y'
+      $stdin.gets.chomp == 'y'
     end
 
     def move_hook_code_into_place
