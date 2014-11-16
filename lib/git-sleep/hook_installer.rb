@@ -40,11 +40,11 @@ module GitSleep
     end
 
     def hook_code_path
-      File.expand_path("../../hooks/#{event}", __FILE__)
+      File.expand_path("../../../hooks/#{event}", __FILE__)
     end
 
     def new_hook_path
-      current_path + '/.git/hooks'
+      current_path + '/.git/hooks/' + event
     end
 
     # TODO: make sure this will be the path the user is currently in
