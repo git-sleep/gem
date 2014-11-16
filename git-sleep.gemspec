@@ -18,7 +18,8 @@ Gem::Specification.new do |git_sleep|
     './.gitignore',
     './hooks/*',
     './bin/*',
-    './lib/*'
+    './lib/*',
+    './lib/git-sleep/*'
   ]
   git_sleep.require_paths = ['lib']
   git_sleep.executables   = ['git-sleep']
