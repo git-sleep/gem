@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require File.expand_path('../../lib/git-sleep', __FILE__)
 
 auth = GitSleep::Authorizer.instance
