@@ -1,11 +1,9 @@
 # git sleep
 
 [![Build Status](https://travis-ci.org/maxjacobson/git-sleep-gem.svg?branch=add-travis)](https://travis-ci.org/maxjacobson/git-sleep-gem)
-
+[![Gem Version](https://badge.fury.io/rb/git-sleep.svg)](http://badge.fury.io/rb/git-sleep)
 [![Code Climate](https://codeclimate.com/github/maxjacobson/git-sleep-gem/badges/gpa.svg)](https://codeclimate.com/github/maxjacobson/git-sleep-gem)
-
-[![Test
-Coverage](https://codeclimate.com/github/maxjacobson/git-sleep-gem/badges/coverage.svg)](https://codeclimate.com/github/maxjacobson/git-sleep-gem)
+[![Test Coverage](https://codeclimate.com/github/maxjacobson/git-sleep-gem/badges/coverage.svg)](https://codeclimate.com/github/maxjacobson/git-sleep-gem)
 
 (code climate score is higher than it should be, I think, because it's ignoring
 the non `*.rb` files)
