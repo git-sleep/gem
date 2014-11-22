@@ -80,6 +80,18 @@ describe GitSleep::Authorizer do
         expect(auth.xid).to eq 'my_great_xid'
       end
     end
+    context 'when the file exists without git sleep credentials' do
+      before do
+        create_unrelated_credentials_file
+      end
+      it 'updates the file' do
+        expect(file).to be_present
+        expect(auth).to_not be_setup
+        auth.xid = 'my_great_xid'
+        expect(file).to be_present
+        expect(auth).to be_setup
+      end
+    end
   end
 end
 
