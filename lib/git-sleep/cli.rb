@@ -37,7 +37,7 @@ module GitSleep
       raise NotGitRepoError unless Dir.entries(current_path).include?('.git')
 
       puts 'Install the pre-commit hook that prevents commits when you' \
-        " haven't sleep enough?"
+        " haven't slept enough?"
       HookInstaller.install('pre-commit') if user_consents?
 
       puts 'Install the post-commit hook that adds git notes about your sleep' \
