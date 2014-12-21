@@ -11,7 +11,6 @@ require_relative './support/netrc_helpers'
 
 RSpec.configure do |config|
   config.before(:each) do
-
     # stub the path method so we can avoid touching the tester's netrc file
     allow_any_instance_of(GitSleep::CredentialsFile).to receive(:path)
       .and_return(test_netrc_path)
