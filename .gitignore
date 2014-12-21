@@ -2,3 +2,4 @@
 *.gem
 /spec/support/.netrc
 Gemfile.lock
+tags
