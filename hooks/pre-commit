@@ -10,8 +10,7 @@ unless comm.can_connect?
 end
 
 if comm.happy_response?
-  data = response.parsed_response
-  if data.can_connect?
+  if comm.can_commit?
     puts "Great job #{comm.username}! " \
       "You slept #{comm.hours_of_sleep} hours in the last 24 hours"
   else

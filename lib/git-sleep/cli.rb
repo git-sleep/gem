@@ -1,5 +1,4 @@
 require_relative './hook_installer'
-require_relative './metadata'
 
 module GitSleep
   class Cli
